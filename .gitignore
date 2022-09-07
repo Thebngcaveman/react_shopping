@@ -29,3 +29,5 @@ react-app-env.d.ts
 setupTests.ts 
 README.md
 reportWebVitals.ts
+
+package-lock.json
