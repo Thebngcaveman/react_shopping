@@ -1,6 +1,11 @@
 import React, { useId, useReducer } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cartSelector, addItemToCart, clearItem } from "../slice/cartReducer";
+import {
+  cartSelector,
+  addItemToCart,
+  clearItem,
+  removeAllItemById,
+} from "../slice/cartReducer";
 
 enum CounterEnum {
   INCREMENT_BY_ONE = "INCREMENT_BY_ONE",
@@ -112,6 +117,12 @@ function MainPage() {
         }
       >
         add book
+      </button>
+      <button onClick={() => dispatch(removeAllItemById(bookId))}>
+        remove book
+      </button>
+      <button onClick={() => dispatch(removeAllItemById(magazineId))}>
+        remove magazine
       </button>
       <button onClick={() => dispatch(clearItem())}>clear item</button>
       {selectProduct.map((value, key) => {
