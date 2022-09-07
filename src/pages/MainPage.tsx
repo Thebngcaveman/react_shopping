@@ -1,4 +1,6 @@
 import React, { useReducer } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { cartSelector, currentItemSelected } from "../slice/cartReducer";
 
 enum CounterEnum {
   INCREMENT = "INCREMENT",
@@ -46,20 +48,21 @@ const reducer = (state: CountState, action: Partial<CountAction>) => {
   }
 };
 
-const initialState = {
+const initialState: CountState = {
   count: 0,
   isClick: false,
 };
 
-function TestUseReducer() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+function MainPage() {
+  const dispatch = useDispatch();
+  const [mainPageState, mainPageDispatch] = useReducer(reducer, initialState);
+  const selectProduct = useSelector(cartSelector);
   return (
     <div>
-      <p>{state.count}</p>
-
+      <p>{mainPageState.count}</p>
       <button
         onClick={() => {
-          dispatch({
+          mainPageDispatch({
             type: CounterEnum.INCREMENT_BY_PAYLOAD,
             payload: 10,
           });
@@ -67,14 +70,44 @@ function TestUseReducer() {
       >
         test btn
       </button>
-
-      <button onClick={() => dispatch({ type: CounterEnum.TOGGLE })}>
+      <button onClick={() => mainPageDispatch({ type: CounterEnum.TOGGLE })}>
         toggle
       </button>
-
-      <p>{state.isClick && "Toggle Click"}</p>
+      <p>{mainPageState.isClick && "Toggle Click"}</p>
+      <button
+        onClick={() =>
+          dispatch(
+            currentItemSelected({
+              description: "Click here to see what lies beneath",
+              id: 2,
+              name: "Play boy magazine",
+              price: 2,
+            })
+          )
+        }
+      >
+        add magazine
+      </button>
+      <button
+        onClick={() =>
+          dispatch(
+            currentItemSelected({
+              description: "how to play valorant like Bronze KEKW",
+              id: 1,
+              name: "valorant guide",
+              price: 222,
+            })
+          )
+        }
+      >
+        add book
+      </button>
+      <p>{"id ====>" + selectProduct.id}</p>
+      <p>{"name ====>" + selectProduct.name}</p>
+      <p>{"description ====>" + selectProduct.description}</p>
+      <p>{"price ====>" + selectProduct.price}</p>
     </div>
   );
 }
 
-export default TestUseReducer;
+export default MainPage;

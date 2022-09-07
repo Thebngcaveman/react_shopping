@@ -1,10 +1,10 @@
 import React from "react";
-import TestUseReducer from "./pages/MainPage";
+import MainPage from "./pages/MainPage";
 
 function App() {
   return (
     <div className="App">
-      <TestUseReducer />
+      <MainPage />
     </div>
   );
 }
