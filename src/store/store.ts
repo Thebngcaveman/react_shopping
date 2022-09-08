@@ -1,6 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import cartReducer from "../slice/cartReducer";
+import createSagaMiddleware from "redux-saga";
+
+const saga = createSagaMiddleware();
 
 const reducers = {
   cartReducer,
@@ -18,7 +21,8 @@ function logger({ getState }: any) {
 export const store = configureStore({
   reducer: reducers,
   devTools: true,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(saga).concat(logger),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

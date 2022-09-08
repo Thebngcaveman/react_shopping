@@ -5,7 +5,8 @@ import {
   addItemToCart,
   clearItem,
   removeAllItemById,
-} from "../slice/cartReducer";
+} from "../../slice/cartReducer";
+import "./MainPage.css";
 
 enum CounterEnum {
   INCREMENT_BY_ONE = "INCREMENT_BY_ONE",
