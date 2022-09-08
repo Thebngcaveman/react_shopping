@@ -1,5 +1,6 @@
-import React, { useId, useReducer } from "react";
+import React, { useId, useReducer, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getDogFetch, shibaSelector } from "../../slice/shibaReducer";
 import {
   cartSelector,
   addItemToCart,
@@ -63,6 +64,7 @@ function MainPage() {
   const dispatch = useDispatch();
   const [mainPageState, mainPageDispatch] = useReducer(reducer, initialState);
   const selectProduct = useSelector(cartSelector);
+  const dogsSelector = useSelector(shibaSelector);
   const magazineId = useId();
   const bookId = useId();
 
@@ -73,7 +75,15 @@ function MainPage() {
     );
   };
 
-  return (
+  useEffect(() => {
+    dispatch(getDogFetch());
+  }, [dispatch]);
+
+  console.log(dogsSelector);
+
+  return dogsSelector.isLoading ? (
+    <p>Loading....</p>
+  ) : (
     <div>
       <p>{mainPageState.count}</p>
       <p>price {calculatePrice()}</p>
@@ -126,15 +136,27 @@ function MainPage() {
         remove magazine
       </button>
       <button onClick={() => dispatch(clearItem())}>clear item</button>
-      {selectProduct.map((value, key) => {
-        return (
-          <div key={key}>
-            <p>{value.name}</p>
-            <p>{value.description}</p>
-            <p>{value.price}</p>
-          </div>
-        );
-      })}
+      <div className="Gallery">
+        {dogsSelector.goodBoys.map((dog, key) => {
+          return (
+            <div key={key} className="row">
+              <div className="column column-left">
+                <img
+                  alt={dog.name}
+                  src={dog.image.url}
+                  width="200"
+                  height="200"
+                />
+              </div>
+              <div className="column column-right">
+                <h2>{dog.name}</h2>
+                <h5>{dog.temperament}</h5>
+                <p>{dog.description}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
