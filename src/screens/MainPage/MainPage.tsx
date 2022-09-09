@@ -1,12 +1,12 @@
 import React, { useId, useReducer, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDogFetch, shibaSelector } from "../../slice/shibaReducer";
+import { getDogFetch, shibaSelector } from "../../redux/slice/shibaReducer";
 import {
   cartSelector,
   addItemToCart,
   clearItem,
   removeAllItemById,
-} from "../../slice/cartReducer";
+} from "../../redux/slice/cartReducer";
 import "./MainPage.css";
 
 enum CounterEnum {
@@ -77,6 +77,7 @@ function MainPage() {
 
   useEffect(() => {
     dispatch(getDogFetch());
+    return () => {};
   }, [dispatch]);
 
   console.log(dogsSelector);

@@ -22,7 +22,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "tailwindcss -i ./input.css -o ./src/css/main.css",
+    "watch": "tailwindcss -i ./input.css -o ./src/css/main.css --watch",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -45,6 +46,7 @@
     ]
   },
   "devDependencies": {
-    "@redux-devtools/core": "^3.13.1"
+    "@redux-devtools/core": "^3.13.1",
+    "tailwindcss": "^3.1.8"
   }
 }
