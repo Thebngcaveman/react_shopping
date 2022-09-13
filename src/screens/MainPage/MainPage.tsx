@@ -1,28 +1,16 @@
 import React, { useId, useReducer } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  CountAction,
+  CounterEnum,
+  CountState,
+} from "../../models/MainPageModel";
+import {
   cartSelector,
   addItemToCart,
   clearItem,
   removeAllItemById,
 } from "../../redux/slice/cartReducer";
-
-enum CounterEnum {
-  INCREMENT_BY_ONE = "INCREMENT_BY_ONE",
-  DECREMENT_BY_ONE = "DECREMENT_BY_ONE",
-  INCREMENT = "INCREMENT",
-  TOGGLE = "TOGGLE",
-}
-
-interface CountAction {
-  type: CounterEnum;
-  payload: number;
-}
-
-interface CountState {
-  count: number;
-  isClick: boolean;
-}
 
 const reducer = (state: CountState, action: Partial<CountAction>) => {
   const { type } = action;
