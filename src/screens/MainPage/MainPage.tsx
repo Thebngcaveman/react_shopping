@@ -1,13 +1,11 @@
-import React, { useId, useReducer, useEffect } from "react";
+import React, { useId, useReducer } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDogFetch, shibaSelector } from "../../redux/slice/shibaReducer";
 import {
   cartSelector,
   addItemToCart,
   clearItem,
   removeAllItemById,
 } from "../../redux/slice/cartReducer";
-import "./MainPage.css";
 
 enum CounterEnum {
   INCREMENT_BY_ONE = "INCREMENT_BY_ONE",
@@ -64,7 +62,6 @@ function MainPage() {
   const dispatch = useDispatch();
   const [mainPageState, mainPageDispatch] = useReducer(reducer, initialState);
   const selectProduct = useSelector(cartSelector);
-  const dogsSelector = useSelector(shibaSelector);
   const magazineId = useId();
   const bookId = useId();
 
@@ -75,20 +72,12 @@ function MainPage() {
     );
   };
 
-  useEffect(() => {
-    dispatch(getDogFetch());
-    return () => {};
-  }, [dispatch]);
-
-  console.log(dogsSelector);
-
-  return dogsSelector.isLoading ? (
-    <p>Loading....</p>
-  ) : (
+  return (
     <div>
       <p>{mainPageState.count}</p>
       <p>price {calculatePrice()}</p>
       <button
+        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
         onClick={() => {
           mainPageDispatch({
             type: CounterEnum.INCREMENT,
@@ -98,11 +87,15 @@ function MainPage() {
       >
         test btn
       </button>
-      <button onClick={() => mainPageDispatch({ type: CounterEnum.TOGGLE })}>
+      <button
+        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        onClick={() => mainPageDispatch({ type: CounterEnum.TOGGLE })}
+      >
         toggle
       </button>
       <p>{mainPageState.isClick && "Toggle Click"}</p>
       <button
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
         onClick={() =>
           dispatch(
             addItemToCart({
@@ -117,6 +110,7 @@ function MainPage() {
         add magazine
       </button>
       <button
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
         onClick={() =>
           dispatch(
             addItemToCart({
@@ -130,34 +124,28 @@ function MainPage() {
       >
         add book
       </button>
-      <button onClick={() => dispatch(removeAllItemById(bookId))}>
+      <button
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => dispatch(removeAllItemById(bookId))}
+      >
         remove book
       </button>
-      <button onClick={() => dispatch(removeAllItemById(magazineId))}>
+      <button
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => dispatch(removeAllItemById(magazineId))}
+      >
         remove magazine
       </button>
-      <button onClick={() => dispatch(clearItem())}>clear item</button>
-      <div className="Gallery">
-        {dogsSelector.goodBoys.map((dog, key) => {
-          return (
-            <div key={key} className="row">
-              <div className="column column-left">
-                <img
-                  alt={dog.name}
-                  src={dog.image.url}
-                  width="200"
-                  height="200"
-                />
-              </div>
-              <div className="column column-right">
-                <h2>{dog.name}</h2>
-                <h5>{dog.temperament}</h5>
-                <p>{dog.description}</p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <button
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => dispatch(clearItem())}
+      >
+        clear item
+      </button>
+
+      <nav className="relative container mx-auto p-6">
+        <div className="flex items-center justify-between"></div>
+      </nav>
     </div>
   );
 }
